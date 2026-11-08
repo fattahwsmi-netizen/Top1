@@ -1,22 +1,21 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hema Hair Salon - Top 1</title>
+<title>Top 1 Salon - Master System</title>
 <style>
   :root {
-    --bg-color: #121212;
-    --card-bg: #1e1e1e;
-    --text-primary: #e0e0e0;
-    --text-secondary: #aaaaaa;
+    --bg-color: #0d0d11;
+    --card-bg: #16161f;
+    --text-primary: #f8f8f9;
+    --text-secondary: #9494a0;
     --accent: #d4af37;
     --accent-hover: #b3922b;
-    --border: #333333;
-    --success: #4caf50;
-    --danger: #f44336;
-    --warning: #ffc107;
+    --border: #27273a;
+    --success: #10b981;
+    --danger: #ef4444;
+    --warning: #f59e0b;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -37,7 +36,7 @@
     z-index: 100;
   }
   .logo { font-size: 1.4rem; font-weight: bold; color: var(--accent); letter-spacing: 1px; }
-  .user-badge { background: #2a2a2a; padding: 5px 12px; border-radius: 20px; font-size: 0.85rem; border: 1px solid var(--accent); color: var(--accent); }
+  .user-badge { background: #20202c; padding: 5px 12px; border-radius: 20px; font-size: 0.85rem; border: 1px solid var(--accent); color: var(--accent); }
   .container { padding: 20px; max-width: 600px; margin: 0 auto; }
   .section { display: none; }
   .section.active { display: block; }
@@ -47,7 +46,7 @@
     border-radius: 12px;
     padding: 16px;
     margin-bottom: 15px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
   }
   .card h3 { color: var(--accent); margin-bottom: 8px; font-size: 1.2rem; }
   .card p { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 5px; }
@@ -98,7 +97,7 @@
   input, select {
     width: 100%;
     padding: 12px;
-    background-color: #2a2a2a;
+    background-color: #20202c;
     border: 1px solid var(--border);
     color: white;
     border-radius: 8px;
@@ -116,8 +115,8 @@
   }
   .stat-value { font-size: 1.4rem; font-weight: bold; color: var(--accent); margin-top: 5px; }
   .badge { padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; display: inline-block; }
-  .badge-success { background: rgba(76, 175, 80, 0.2); color: var(--success); }
-  .badge-warning { background: rgba(255, 193, 7, 0.2); color: var(--warning); }
+  .badge-success { background: rgba(16, 185, 129, 0.2); color: var(--success); }
+  .badge-warning { background: rgba(245, 158, 11, 0.2); color: var(--warning); }
   
   table { width: 100%; border-collapse: collapse; margin-top: 10px; }
   th, td { padding: 10px; text-align: right; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
@@ -127,7 +126,7 @@
 <body>
 
 <header>
-  <div class="logo">Hema Hair</div>
+  <div class="logo">Top 1 Salon</div>
   <div class="user-badge" id="user-display">Mohamed Fattah</div>
 </header>
 
@@ -137,7 +136,7 @@
     <h3>خدماتنا</h3>
     <div id="services-list"></div>
     
-    <h3 style="margin-top: 25px;">حلاقينا المحترفين</h3>
+    <h3 style="margin-top: 25px;">فريق العمل</h3>
     <div id="staff-list"></div>
     
     <div class="card" style="margin-top: 25px;">
@@ -164,7 +163,7 @@
         <select id="book-service" onchange="updateBookingPrice()"></select>
       </div>
       <div class="form-group">
-        <label>اختر الحلاق</label>
+        <label>اختر الصنايعي</label>
         <select id="book-staff"></select>
       </div>
       <div class="form-group">
@@ -175,7 +174,7 @@
         <label>الوقت</label>
         <input type="time" id="book-time" required>
       </div>
-      <div class="card" style="background:#262626; border-color:var(--accent);">
+      <div class="card" style="background:#20202c; border-color:var(--accent);">
         <p style="color:#fff;">إجمالي السعر: <span id="book-price" class="price">0</span> ج.م</p>
       </div>
       <button type="submit" class="btn">تأكيد الحجز</button>
@@ -184,7 +183,7 @@
 
   <!-- Appointments Section -->
   <div id="section-appointments" class="section">
-    <h3>مواعيدي الحالية والسابقة</h3>
+    <h3>مواعيدي</h3>
     <div id="appointments-list"></div>
   </div>
 
@@ -255,14 +254,15 @@
       { id: 4, name: "تنظيف وجه", price: 35, duration: "25 دقيقة" }
     ],
     staff: [
-      { id: 1, name: "أحمد العتيبي", experience: "12 سنة خبرة", salary: 12000 },
-      { id: 2, name: "محمد فتحي", experience: "20 سنة خبرة", salary: 11000 },
-      { id: 3, name: "يوسف الشمري", experience: "6 سنوات خبرة", salary: 9500 }
+      { id: 1, name: "يوسف", experience: "خبرة ممتازة", salary: 12000 },
+      { id: 2, name: "أحمد", experience: "خبرة عالية", salary: 11000 },
+      { id: 3, name: "عبده", experience: "مهارة احترافية", salary: 10000 },
+      { id: 4, name: "منعم", experience: "عناية متخصصة", salary: 9500 },
+      { id: 5, name: "آدم", experience: "تنسيق ومظهر", salary: 10500 }
     ],
     bookings: [
-      { id: 1, client: "Mohamed Fattah", phone: "01065288723", service: "شعر + دقن", staff: "أحمد العتيبي", date: "2026-11-08", time: "10:00", price: 60, status: "مكتمل" },
-      { id: 2, client: "Mohamed Fattah", phone: "01065288723", service: "حلاقة شعر", staff: "أحمد العتيبي", date: "2026-11-08", time: "12:00", price: 40, status: "مؤكد" },
-      { id: 3, client: "Mohamed Fattah", phone: "01065288723", service: "شعر + دقن", staff: "محمد فتحي", date: "2026-11-08", time: "15:00", price: 60, status: "بانتظار التأكيد" }
+      { id: 1, client: "Mohamed Fattah", phone: "01065288723", service: "شعر + دقن", staff: "يوسف", date: "2026-11-08", time: "10:00", price: 60, status: "مكتمل" },
+      { id: 2, client: "Mohamed Fattah", phone: "01065288723", service: "حلاقة شعر", staff: "أحمد", date: "2026-11-08", time: "12:00", price: 40, status: "مؤكد" }
     ],
     attendance: [
       { staffId: 1, type: "حضور" },
@@ -354,7 +354,7 @@
           <h3>${b.service}</h3>
           <span class="badge ${getStatusClass(b.status)}">${b.status}</span>
         </div>
-        <p>الحلاق: ${b.staff}</p>
+        <p>الصنايعي: ${b.staff}</p>
         <p>التاريخ: ${b.date} | الوقت: ${b.time}</p>
         <p>السعر: <span class="price">${b.price} ج.م</span></p>
         ${b.status !== 'مكتمل' ? `<button class="btn btn-danger" style="margin-top:10px;" onclick="cancelBooking(${b.id})">إلغاء الموعد</button>` : ''}
@@ -382,10 +382,8 @@
     document.getElementById('stat-revenue').innerText = `${revenue} ج.م`;
     document.getElementById('stat-count').innerText = todaysBookings.length;
     
-    // Select for Attendance
     document.getElementById('admin-attendance-staff').innerHTML = state.staff.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
     
-    // Salary Table
     document.getElementById('salary-table-body').innerHTML = state.staff.map(s => {
       const days = state.attendance.filter(a => a.staffId === s.id && a.type === 'حضور').length;
       const earned = Math.round((s.salary / 26) * days);
@@ -399,7 +397,6 @@
       `;
     }).join('');
 
-    // All Appointments
     const list = document.getElementById('admin-appointments-list');
     list.innerHTML = state.bookings.map(b => `
       <div class="card">
@@ -407,7 +404,7 @@
           <h4>${b.client} (${b.phone})</h4>
           <span class="badge ${getStatusClass(b.status)}">${b.status}</span>
         </div>
-        <p>الخدمة: ${b.service} | الحلاق: ${b.staff}</p>
+        <p>الخدمة: ${b.service} | الصنايعي: ${b.staff}</p>
         <p>التاريخ: ${b.date} ${b.time}</p>
         <div style="display:flex; gap:10px; margin-top:10px;">
           ${b.status === 'بانتظار التأكيد' ? `<button class="btn btn-success" onclick="updateStatus(${b.id}, 'مؤكد')">تأكيد</button>` : ''}
@@ -437,4 +434,3 @@
 
 </body>
 </html>
-
