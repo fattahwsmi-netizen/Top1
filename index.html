@@ -1,152 +1,392 @@
-
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Top 1 Salon</title>
+<title>System Top 1 Salon</title>
 <style>
   :root {
-    --bg-color: #0d0d0d;
-    --card-bg: #1a1a1a;
-    --text-primary: #ffffff;
-    --text-secondary: #a6a6a6;
-    --accent-color: #e6e6e6;
-    --border-color: #333333;
+    --bg-color: #0a0a0c;
+    --card-bg: #141418;
+    --text-primary: #f0f0f5;
+    --text-secondary: #8c8c9e;
+    --accent: #00d2ff;
+    --border: #272733;
+    --success: #00c853;
+    --danger: #ff3333;
   }
-  
+  * { box-sizing: border-box; }
   body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: var(--bg-color);
     color: var(--text-primary);
     margin: 0;
-    padding: 20px;
+    padding: 0;
   }
-  
-  .header {
-    text-align: center;
-    padding: 40px 0;
-    border-bottom: 1px solid var(--border-color);
-  }
-  
-  .logo {
-    font-size: 3rem;
-    font-weight: bold;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    background: linear-gradient(45deg, #ffffff, #8c8c8c);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  
-  .section-title {
-    font-size: 1.8rem;
-    margin: 40px 0 20px;
-    border-right: 4px solid var(--text-primary);
-    padding-right: 15px;
-  }
-  
-  .barbers-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-  }
-  
-  .barber-card {
+  header {
     background-color: var(--card-bg);
-    border-radius: 12px;
     padding: 20px;
-    border: 1px solid var(--border-color);
-    transition: transform 0.3s ease, border-color 0.3s ease;
+    text-align: center;
+    border-bottom: 2px solid var(--border);
   }
-  
-  .barber-card:hover {
-    transform: translateY(-5px);
-    border-color: var(--text-primary);
+  .logo {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 2px;
   }
-  
-  .barber-name {
-    font-size: 1.4rem;
-    font-weight: 600;
-    margin-bottom: 10px;
+  .nav-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
   }
-  
-  .skills-tag {
-    display: inline-block;
-    background-color: #262626;
+  .tab-btn {
+    background: none;
+    border: 1px solid var(--border);
     color: var(--text-secondary);
-    padding: 5px 10px;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+  }
+  .tab-btn.active, .tab-btn:hover {
+    background-color: var(--accent);
+    color: var(--bg-color);
+    border-color: var(--accent);
+    font-weight: bold;
+  }
+  .container { max-width: 1200px; margin: 30px auto; padding: 20px; }
+  .view-section { display: none; }
+  .view-section.active { display: block; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+  }
+  .card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 25px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  }
+  h2 { border-right: 4px solid var(--accent); padding-right: 15px; margin-bottom: 20px; }
+  .card h3 { margin-top: 0; color: var(--accent); font-size: 1.5rem; }
+  .form-group { margin-bottom: 20px; }
+  label { display: block; margin-bottom: 8px; color: var(--text-secondary); font-weight: 500; }
+  input, select, textarea {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    border-radius: 8px;
+    font-size: 1rem;
+  }
+  input:focus, select:focus {
+    border-color: var(--accent);
+    outline: none;
+  }
+  button.action-btn {
+    width: 100%;
+    padding: 14px;
+    background-color: var(--accent);
+    color: var(--bg-color);
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  button.action-btn:hover { opacity: 0.9; }
+  .table-responsive { overflow-x: auto; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  th, td {
+    padding: 16px;
+    text-align: right;
+    border-bottom: 1px solid var(--border);
+  }
+  th { background-color: var(--border); color: var(--accent); }
+  .badge {
+    padding: 6px 12px;
     border-radius: 20px;
     font-size: 0.9rem;
-    margin-bottom: 15px;
-  }
-  
-  .rating {
-    color: #ffd700;
-    margin-bottom: 15px;
-  }
-  
-  .book-btn {
-    display: block;
-    width: 100%;
-    background-color: var(--text-primary);
-    color: var(--bg-color);
-    text-align: center;
-    padding: 12px;
-    border-radius: 8px;
-    text-decoration: none;
     font-weight: bold;
-    transition: background-color 0.3s ease;
   }
-  
-  .book-btn:hover {
-    background-color: var(--text-secondary);
+  .badge-success { background-color: rgba(0, 200, 83, 0.2); color: var(--success); border: 1px solid var(--success); }
+  .rating-stars { color: #ffaa00; font-size: 1.2rem; margin-bottom: 10px; }
+  .skills-container { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .skill-pill {
+    background-color: var(--bg-color);
+    border: 1px solid var(--border);
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
   }
 </style>
 </head>
 <body>
 
-<div class="header">
-  <div class="logo">Top 1</div>
-  <p>صالون الحلاقة العصرية</p>
+<header>
+  <div class="logo">Top 1 Salon</div>
+  <nav class="nav-tabs">
+    <button class="tab-btn active" onclick="switchView('client')">واجهة العملاء</button>
+    <button class="tab-btn" onclick="switchView('staff')">بوابة الصنايعية</button>
+    <button class="tab-btn" onclick="switchView('admin')">لوحة الإدارة</button>
+  </nav>
+</header>
+
+<div class="container">
+  <!-- Client View -->
+  <div id="client-view" class="view-section active">
+    <h2>فريق العمل والخدمات</h2>
+    <div class="grid" id="staff-cards-container"></div>
+    
+    <h2 style="margin-top: 50px;">حجز موعد جديد</h2>
+    <div class="card" style="max-width: 700px; margin: 0 auto;">
+      <form id="booking-form" onsubmit="handleBooking(event)">
+        <div class="form-group">
+          <label>اسم العميل</label>
+          <input type="text" id="client-name" required placeholder="أدخل اسمك الكريم">
+        </div>
+        <div class="form-group">
+          <label>اختر الصنايعي</label>
+          <select id="booking-staff-select" required></select>
+        </div>
+        <div class="form-group">
+          <label>نوع الخدمة</label>
+          <select id="booking-service-select" required></select>
+        </div>
+        <div class="form-group">
+          <label>التاريخ والوقت</label>
+          <input type="datetime-local" id="booking-datetime" required>
+        </div>
+        <button type="submit" class="action-btn">تأكيد وحفظ الحجز</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Staff View -->
+  <div id="staff-view" class="view-section">
+    <h2>مواعيدي القادمة</h2>
+    <div class="card" style="margin-bottom: 25px;">
+      <div class="form-group" style="max-width: 300px; margin-bottom: 0;">
+        <label>اختر اسمك</label>
+        <select id="staff-filter-select" onchange="renderStaffView()"></select>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table id="staff-appointments-table">
+        <thead>
+          <tr>
+            <th>العميل</th>
+            <th>الخدمة</th>
+            <th>التاريخ والوقت</th>
+            <th>الحالة</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Admin View -->
+  <div id="admin-view" class="view-section">
+    <h2>لوحة تحكم الإدارة الشاملة</h2>
+    <div class="grid">
+      <div class="card" style="grid-column: span 2;">
+        <h3>سجل المواعيد العام</h3>
+        <div class="table-responsive">
+          <table id="admin-bookings-table">
+            <thead>
+              <tr>
+                <th>العميل</th>
+                <th>الصنايعي</th>
+                <th>الخدمة</th>
+                <th>التاريخ والوقت</th>
+                <th>الإجراءات</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+      
+      <div class="card">
+        <h3>إضافة صنايعي جديد</h3>
+        <form onsubmit="handleAddStaff(event)">
+          <div class="form-group">
+            <label>اسم الصنايعي</label>
+            <input type="text" id="new-staff-name" required placeholder="اسم الحلاق">
+          </div>
+          <div class="form-group">
+            <label>المهارات (مفصولة بفاصلة)</label>
+            <input type="text" id="new-staff-skills" required placeholder="تدريج, دقن, صبغة">
+          </div>
+          <button type="submit" class="action-btn" style="background-color: var(--success); color: white;">إضافة إلى الفريق</button>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div class="section-title">فريق العمل</div>
+<script>
+  const state = {
+    staff: [
+      { id: 1, name: 'يوسف', skills: ['تدريج كلاسيكي', 'تحديد لحية'], rating: 5 },
+      { id: 2, name: 'أحمد', skills: ['قصات عصرية', 'صبغات'], rating: 5 },
+      { id: 3, name: 'عبده', skills: ['حلاقة أطفال', 'سشوار'], rating: 5 },
+      { id: 4, name: 'منعم', skills: ['تنظيف بشرة', 'ماسكات'], rating: 4 },
+      { id: 5, name: 'آدم', skills: ['تنعيم شعر', 'عناية شاملة'], rating: 5 }
+    ],
+    services: ['قص شعر', 'تحديد لحية', 'تنظيف بشرة', 'صبغة شعر', 'عناية بالوجه'],
+    bookings: [
+      { id: 1699999990000, client: 'محمد محمود', staffId: 1, service: 'تدريج كلاسيكي', datetime: '2026-11-10T14:00', status: 'مؤكد' },
+      { id: 1699999991000, client: 'علي حسن', staffId: 2, service: 'صبغة شعر', datetime: '2026-11-10T16:30', status: 'مؤكد' }
+    ]
+  };
 
-<div class="barbers-grid">
-  <div class="barber-card">
-    <div class="barber-name">يوسف</div>
-    <div class="skills-tag">تدريج كلاسيكي & تحديد لحية</div>
-    <div class="rating">★★★★★</div>
-    <a href="#" class="book-btn">حجز موعد</a>
-  </div>
+  function switchView(viewId) {
+    document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+    document.getElementById(`${viewId}-view`).classList.add('active');
+    event.currentTarget.classList.add('active');
+    
+    if(viewId === 'staff') renderStaffView();
+    if(viewId === 'admin') renderAdminView();
+  }
 
-  <div class="barber-card">
-    <div class="barber-name">أحمد</div>
-    <div class="skills-tag">قصات عصرية & صبغات</div>
-    <div class="rating">★★★★☆</div>
-    <a href="#" class="book-btn">حجز موعد</a>
-  </div>
+  function init() {
+    renderClientView();
+    populateSelects();
+  }
 
-  <div class="barber-card">
-    <div class="barber-name">عبده</div>
-    <div class="skills-tag">حلاقة أطفال & سشوار</div>
-    <div class="rating">★★★★★</div>
-    <a href="#" class="book-btn">حجز موعد</a>
-  </div>
+  function populateSelects() {
+    const staffSelects = ['booking-staff-select', 'staff-filter-select'];
+    staffSelects.forEach(id => {
+      const el = document.getElementById(id);
+      if(!el) return;
+      const currentVal = el.value;
+      el.innerHTML = state.staff.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+      if(currentVal) el.value = currentVal;
+    });
+    
+    const serviceSelect = document.getElementById('booking-service-select');
+    if(serviceSelect) {
+      serviceSelect.innerHTML = state.services.map(s => `<option value="${s}">${s}</option>`).join('');
+    }
+  }
 
-  <div class="barber-card">
-    <div class="barber-name">منعم</div>
-    <div class="skills-tag">تنظيف بشرة & ماسكات</div>
-    <div class="rating">★★★★☆</div>
-    <a href="#" class="book-btn">حجز موعد</a>
-  </div>
+  function renderClientView() {
+    const container = document.getElementById('staff-cards-container');
+    if(!container) return;
+    container.innerHTML = state.staff.map(s => `
+      <div class="card">
+        <h3>${s.name}</h3>
+        <div class="rating-stars">${'★'.repeat(Math.floor(s.rating))}</div>
+        <div style="font-size: 0.9rem; color: var(--text-secondary);">الخبرات والمهارات:</div>
+        <div class="skills-container">
+          ${s.skills.map(skill => `<span class="skill-pill">${skill}</span>`).join('')}
+        </div>
+      </div>
+    `).join('');
+  }
 
-  <div class="barber-card">
-    <div class="barber-name">آدم</div>
-    <div class="skills-tag">تنعيم شعر & عناية شاملة</div>
-    <div class="rating">★★★★★</div>
-    <a href="#" class="book-btn">حجز موعد</a>
-  </div>
-</div>
+  function handleBooking(e) {
+    e.preventDefault();
+    const newBooking = {
+      id: Date.now(),
+      client: document.getElementById('client-name').value,
+      staffId: parseInt(document.getElementById('booking-staff-select').value),
+      service: document.getElementById('booking-service-select').value,
+      datetime: document.getElementById('booking-datetime').value,
+      status: 'مؤكد'
+    };
+    state.bookings.push(newBooking);
+    alert('تم تأكيد الحجز بنجاح!');
+    document.getElementById('booking-form').reset();
+    
+    if(document.getElementById('admin-view').classList.contains('active')) renderAdminView();
+    if(document.getElementById('staff-view').classList.contains('active')) renderStaffView();
+  }
+
+  function renderStaffView() {
+    const el = document.getElementById('staff-filter-select');
+    if(!el || !el.value) return;
+    const selectedStaffId = parseInt(el.value);
+    const tbody = document.querySelector('#staff-appointments-table tbody');
+    const staffBookings = state.bookings.filter(b => b.staffId === selectedStaffId);
+    
+    tbody.innerHTML = staffBookings.map(b => `
+      <tr>
+        <td>${b.client}</td>
+        <td>${b.service}</td>
+        <td>${b.datetime.replace('T', ' ')}</td>
+        <td><span class="badge badge-success">${b.status}</span></td>
+      </tr>
+    `).join('') || '<tr><td colspan="4" style="text-align:center; color: var(--text-secondary);">لا توجد مواعيد مسجلة حالياً</td></tr>';
+  }
+
+  function renderAdminView() {
+    const tbody = document.querySelector('#admin-bookings-table tbody');
+    tbody.innerHTML = state.bookings.map(b => {
+      const staff = state.staff.find(s => s.id === b.staffId);
+      return `
+        <tr>
+          <td><strong>${b.client}</strong></td>
+          <td>${staff ? staff.name : 'غير معروف'}</td>
+          <td>${b.service}</td>
+          <td>${b.datetime.replace('T', ' ')}</td>
+          <td><button onclick="cancelBooking(${b.id})" style="background-color: var(--danger); color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 0.9rem;">إلغاء</button></td>
+        </tr>
+      `;
+    }).join('') || '<tr><td colspan="5" style="text-align:center; color: var(--text-secondary);">لا توجد بيانات مواعيد</td></tr>';
+  }
+
+  function cancelBooking(id) {
+    if(confirm('هل أنت متأكد من إلغاء هذا الحجز؟')) {
+      state.bookings = state.bookings.filter(b => b.id !== id);
+      renderAdminView();
+      if(document.getElementById('staff-view').classList.contains('active')) renderStaffView();
+    }
+  }
+
+  function handleAddStaff(e) {
+    e.preventDefault();
+    const nameInput = document.getElementById('new-staff-name');
+    const skillsInput = document.getElementById('new-staff-skills');
+    
+    const newStaff = {
+      id: Date.now(),
+      name: nameInput.value,
+      skills: skillsInput.value.split(',').map(s => s.trim()).filter(s => s.length > 0),
+      rating: 5
+    };
+    
+    state.staff.push(newStaff);
+    alert('تمت إضافة الصنايعي إلى النظام بنجاح!');
+    nameInput.value = '';
+    skillsInput.value = '';
+    
+    populateSelects();
+    renderClientView();
+    if(document.getElementById('staff-view').classList.contains('active')) renderStaffView();
+  }
+
+  window.onload = init;
+</script>
 
 </body>
 </html>
