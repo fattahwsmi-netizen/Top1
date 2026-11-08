@@ -191,7 +191,7 @@
   <nav class="nav-tabs">
     <button class="tab-btn active" onclick="switchView('client')">واجهة العملاء</button>
     <button class="tab-btn" onclick="switchView('staff')">بوابة الصنايعية</button>
-    <button class="tab-btn" onclick="switchView('admin')" id="admin-tab-btn">لوحة الإدارة</button>
+    <!-- Admin tab is hidden by default until login, but accessible via PIN -->
   </nav>
 </header>
 
@@ -451,7 +451,15 @@
       state.isAdminLoggedIn = true;
       document.getElementById('auth-overlay').style.display = 'none';
       document.getElementById('pin-error').style.display = 'none';
-      renderAllAdmin();
+      if(!document.getElementById('admin-tab-btn')) {
+        const adminTab = document.createElement('button');
+        adminTab.id = 'admin-tab-btn';
+        adminTab.className = 'tab-btn';
+        adminTab.innerText = 'لوحة الإدارة';
+        adminTab.onclick = () => switchView('admin');
+        document.querySelector('.nav-tabs').appendChild(adminTab);
+      }
+      switchView('admin');
     } else {
       document.getElementById('pin-error').style.display = 'block';
     }
@@ -459,6 +467,8 @@
 
   function logoutAdmin() {
     state.isAdminLoggedIn = false;
+    const adminTab = document.getElementById('admin-tab-btn');
+    if(adminTab) adminTab.remove();
     document.getElementById('auth-overlay').style.display = 'flex';
     document.getElementById('admin-pin').value = '';
     switchView('client');
@@ -482,11 +492,8 @@
     document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
     document.getElementById(`${viewId}-view`).classList.add('active');
     
-    if(window.event && window.event.currentTarget) {
-      window.event.currentTarget.classList.add('active');
-    } else {
-      document.querySelector(`button[onclick="switchView('${viewId}')"]`)?.classList.add('active');
-    }
+    const clickedBtn = document.querySelector(`button[onclick="switchView('${viewId}')"]`) || document.getElementById('admin-tab-btn');
+    if(clickedBtn) clickedBtn.classList.add('active');
     
     if(viewId === 'staff') renderStaffView();
     if(viewId === 'admin') renderAllAdmin();
@@ -572,16 +579,4 @@
   }
 
   function renderAllAdmin() {
-    if(!state.isAdminLoggedIn) return;
-    renderAdminCustomers();
-    renderAdminBookings();
-    renderAdminAttendance();
-    renderAdminSalaries();
-    updateStats();
-  }
-
-  function updateStats() {
-    document.getElementById('stat-staff-count').innerText = state.staff.length;
-    document.getElementById('stat-bookings-count').innerText = state.bookings.length;
     
-    co
