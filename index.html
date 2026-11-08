@@ -4,579 +4,437 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ultimate System Top 1 Salon</title>
+<title>Hema Hair Salon - Top 1</title>
 <style>
   :root {
-    --bg-color: #0d0d11;
-    --card-bg: #16161f;
-    --text-primary: #f8f8f9;
-    --text-secondary: #9494a0;
-    --accent: #3b82f6;
-    --accent-hover: #2563eb;
-    --border: #27273a;
-    --success: #10b981;
-    --danger: #ef4444;
-    --warning: #f59e0b;
+    --bg-color: #121212;
+    --card-bg: #1e1e1e;
+    --text-primary: #e0e0e0;
+    --text-secondary: #aaaaaa;
+    --accent: #d4af37;
+    --accent-hover: #b3922b;
+    --border: #333333;
+    --success: #4caf50;
+    --danger: #f44336;
+    --warning: #ffc107;
   }
-  * { box-sizing: border-box; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: var(--bg-color);
     color: var(--text-primary);
-    margin: 0;
-    padding: 0;
+    padding-bottom: 90px;
   }
   header {
     background-color: var(--card-bg);
-    padding: 20px;
-    text-align: center;
-    border-bottom: 2px solid var(--border);
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--accent);
     position: sticky;
     top: 0;
     z-index: 100;
   }
-  .logo {
-    font-size: 2.5rem;
-    font-weight: 800;
-    color: var(--accent);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-  }
-  .nav-tabs {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 15px;
-  }
-  .tab-btn {
-    background: none;
-    border: 1px solid var(--border);
-    color: var(--text-secondary);
-    padding: 10px 20px;
-    border-radius: 25px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-  }
-  .tab-btn.active, .tab-btn:hover {
-    background-color: var(--accent);
-    color: #fff;
-    border-color: var(--accent);
-    font-weight: bold;
-  }
-  .container { max-width: 1200px; margin: 30px auto; padding: 20px; }
-  .view-section { display: none; }
-  .view-section.active { display: block; }
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 25px;
-  }
+  .logo { font-size: 1.4rem; font-weight: bold; color: var(--accent); letter-spacing: 1px; }
+  .user-badge { background: #2a2a2a; padding: 5px 12px; border-radius: 20px; font-size: 0.85rem; border: 1px solid var(--accent); color: var(--accent); }
+  .container { padding: 20px; max-width: 600px; margin: 0 auto; }
+  .section { display: none; }
+  .section.active { display: block; }
   .card {
     background-color: var(--card-bg);
     border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 25px;
-    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
   }
-  h2 { border-right: 4px solid var(--accent); padding-right: 15px; margin-bottom: 20px; color: #fff; }
-  .card h3 { margin-top: 0; color: var(--accent); font-size: 1.5rem; }
-  .form-group { margin-bottom: 20px; }
-  label { display: block; margin-bottom: 8px; color: var(--text-secondary); font-weight: 500; }
-  input, select, textarea {
+  .card h3 { color: var(--accent); margin-bottom: 8px; font-size: 1.2rem; }
+  .card p { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 5px; }
+  .price { color: var(--accent); font-weight: bold; font-size: 1.1rem; }
+  .btn {
+    display: block;
     width: 100%;
-    padding: 14px;
-    background-color: var(--bg-color);
-    border: 1px solid var(--border);
-    color: var(--text-primary);
-    border-radius: 8px;
-    font-size: 1rem;
-  }
-  input:focus, select:focus {
-    border-color: var(--accent);
-    outline: none;
-  }
-  button.action-btn {
-    width: 100%;
-    padding: 14px;
+    padding: 12px;
     background-color: var(--accent);
-    color: #fff;
+    color: #000;
     border: none;
     border-radius: 8px;
     font-weight: bold;
-    font-size: 1.1rem;
+    font-size: 1rem;
+    text-align: center;
     cursor: pointer;
-    transition: background-color 0.2s;
+    text-decoration: none;
+    margin-top: 10px;
+    transition: 0.2s;
   }
-  button.action-btn:hover { background-color: var(--accent-hover); }
-  .table-responsive { overflow-x: auto; }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 15px;
-    background-color: var(--card-bg);
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  th, td {
-    padding: 16px;
-    text-align: right;
-    border-bottom: 1px solid var(--border);
-  }
-  th { background-color: #20202c; color: var(--accent); font-weight: 600; }
-  tr:hover { background-color: rgba(255,255,255,0.02); }
-  .badge {
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    font-weight: bold;
-    display: inline-block;
-  }
-  .badge-success { background-color: rgba(16, 185, 129, 0.2); color: var(--success); }
-  .badge-danger { background-color: rgba(239, 68, 68, 0.2); color: var(--danger); }
-  .rating-stars { color: #f59e0b; font-size: 1.2rem; margin-bottom: 10px; }
-  .skills-container { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
-  .skill-pill {
-    background-color: #20202c;
-    border: 1px solid var(--border);
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-  }
-  #auth-overlay {
+  .btn:hover { background-color: var(--accent-hover); }
+  .btn-danger { background-color: var(--danger); color: white; }
+  .btn-success { background-color: var(--success); color: white; }
+  
+  .nav-bottom {
     position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(13, 13, 17, 0.95);
+    bottom: 0; left: 0; right: 0;
+    background-color: var(--card-bg);
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-around;
+    padding: 12px 0;
+    border-top: 1px solid var(--border);
     z-index: 1000;
   }
-  .auth-box {
-    background: var(--card-bg);
-    padding: 40px;
-    border-radius: 16px;
-    border: 1px solid var(--border);
+  .nav-btn {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    cursor: pointer;
+    text-align: center;
+    flex: 1;
+  }
+  .nav-btn.active, .nav-btn:hover { color: var(--accent); font-weight: bold; }
+  
+  .form-group { margin-bottom: 15px; }
+  label { display: block; margin-bottom: 6px; color: var(--text-secondary); font-size: 0.9rem; }
+  input, select {
     width: 100%;
-    max-width: 400px;
-    text-align: center;
+    padding: 12px;
+    background-color: #2a2a2a;
+    border: 1px solid var(--border);
+    color: white;
+    border-radius: 8px;
+    font-size: 1rem;
   }
+  input:focus, select:focus { border-color: var(--accent); outline: none; }
+  
+  .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
   .stat-card {
+    background: var(--card-bg);
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid var(--accent);
     text-align: center;
-    padding: 20px;
-    background: #20202c;
-    border-radius: 12px;
   }
-  .stat-value { font-size: 2rem; font-weight: bold; color: var(--accent); margin-top: 5px; }
+  .stat-value { font-size: 1.4rem; font-weight: bold; color: var(--accent); margin-top: 5px; }
+  .badge { padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; display: inline-block; }
+  .badge-success { background: rgba(76, 175, 80, 0.2); color: var(--success); }
+  .badge-warning { background: rgba(255, 193, 7, 0.2); color: var(--warning); }
+  
+  table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+  th, td { padding: 10px; text-align: right; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+  th { color: var(--accent); }
 </style>
 </head>
 <body>
 
-<!-- Authentication Modal for Admin -->
-<div id="auth-overlay">
-  <div class="auth-box">
-    <h3>الدخول إلى لوحة الإدارة</h3>
-    <p style="color: var(--text-secondary);">الكلمة الافتراضية: 1234</p>
-    <div class="form-group" style="margin-top: 20px;">
-      <input type="password" id="admin-pin" placeholder="أدخل رمز المرور" style="text-align: center; font-size: 1.5rem;">
-    </div>
-    <button class="action-btn" onclick="checkAdminLogin()">دخول</button>
-    <p id="pin-error" style="color: var(--danger); margin-top: 15px; display: none;">رمز خاطئ</p>
-  </div>
-</div>
-
 <header>
-  <div class="logo">Top 1 Salon</div>
-  <nav class="nav-tabs">
-    <button class="tab-btn active" onclick="switchView('client')">واجهة العملاء</button>
-    <button class="tab-btn" onclick="switchView('staff')">بوابة الصنايعية</button>
-    <!-- Admin tab is hidden by default until login, but accessible via PIN -->
-  </nav>
+  <div class="logo">Hema Hair</div>
+  <div class="user-badge" id="user-display">Mohamed Fattah</div>
 </header>
 
 <div class="container">
-  <!-- Client View -->
-  <div id="client-view" class="view-section active">
-    <h2>فريق العمل والخدمات</h2>
-    <div class="grid" id="staff-cards-container"></div>
+  <!-- Home Section -->
+  <div id="section-home" class="section active">
+    <h3>خدماتنا</h3>
+    <div id="services-list"></div>
     
-    <h2 style="margin-top: 50px;">حجز موعد جديد</h2>
-    <div class="card" style="max-width: 700px; margin: 0 auto;">
-      <form id="booking-form" onsubmit="handleBooking(event)">
-        <div class="form-group">
-          <label>اسم العميل</label>
-          <input type="text" id="client-name" required placeholder="أدخل اسمك الكريم">
-        </div>
-        <div class="form-group">
-          <label>رقم الهاتف</label>
-          <input type="tel" id="client-phone" required placeholder="01XXXXXXXXX">
-        </div>
-        <div class="form-group">
-          <label>اختر الصنايعي</label>
-          <select id="booking-staff-select" required></select>
-        </div>
-        <div class="form-group">
-          <label>نوع الخدمة</label>
-          <select id="booking-service-select" required></select>
-        </div>
-        <div class="form-group">
-          <label>التاريخ والوقت</label>
-          <input type="datetime-local" id="booking-datetime" required>
-        </div>
-        <button type="submit" class="action-btn">تأكيد وحفظ الحجز</button>
-      </form>
-    </div>
-  </div>
-
-  <!-- Staff View -->
-  <div id="staff-view" class="view-section">
-    <h2>بوابة الصنايعية ومتابعة الدوام</h2>
-    <div class="grid">
-      <div class="card">
-        <h3>تسجيل الحضور والانصراف</h3>
-        <div class="form-group">
-          <label>اختر اسمك</label>
-          <select id="attendance-staff-select"></select>
-        </div>
-        <div style="display: flex; gap: 10px;">
-          <button class="action-btn" style="background-color: var(--success);" onclick="recordAttendance('حضور')">تسجيل حضور</button>
-          <button class="action-btn" style="background-color: var(--danger);" onclick="recordAttendance('انصراف')">تسجيل انصراف</button>
-        </div>
-      </div>
-      
-      <div class="card">
-        <h3>مواعيدي القادمة</h3>
-        <div class="form-group">
-          <label>فلتر حسب اسمك</label>
-          <select id="staff-filter-select" onchange="renderStaffView()"></select>
-        </div>
-      </div>
-    </div>
-
+    <h3 style="margin-top: 25px;">حلاقينا المحترفين</h3>
+    <div id="staff-list"></div>
+    
     <div class="card" style="margin-top: 25px;">
-      <h3>سجل المواعيد الخاص بي</h3>
-      <div class="table-responsive">
-        <table id="staff-appointments-table">
-          <thead>
-            <tr>
-              <th>العميل</th>
-              <th>الهاتف</th>
-              <th>الخدمة</th>
-              <th>التاريخ والوقت</th>
-              <th>الحالة</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
+      <h3>عنوان المحل</h3>
+      <p>📍 شارع فرن العيش، عزبة خيزة، أمام البنزينة - امتداد شارع أحمد عرابي، المهندسين.</p>
+      <p style="margin-top: 8px;">📞 01151495701</p>
     </div>
   </div>
 
-  <!-- Admin View -->
-  <div id="admin-view" class="view-section">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-      <h2>لوحة تحكم الإدارة الشاملة</h2>
-      <button class="tab-btn" style="border-color: var(--danger); color: var(--danger);" onclick="logoutAdmin()">تسجيل الخروج</button>
+  <!-- Book Section -->
+  <div id="section-book" class="section">
+    <h3>احجز موعدك الآن</h3>
+    <form id="booking-form" onsubmit="submitBooking(event)">
+      <div class="form-group">
+        <label>الاسم بالكامل</label>
+        <input type="text" id="client-name" required value="Mohamed Fattah">
+      </div>
+      <div class="form-group">
+        <label>رقم المحمول</label>
+        <input type="tel" id="client-phone" required value="01065288723">
+      </div>
+      <div class="form-group">
+        <label>اختر الخدمة</label>
+        <select id="book-service" onchange="updateBookingPrice()"></select>
+      </div>
+      <div class="form-group">
+        <label>اختر الحلاق</label>
+        <select id="book-staff"></select>
+      </div>
+      <div class="form-group">
+        <label>التاريخ</label>
+        <input type="date" id="book-date" required>
+      </div>
+      <div class="form-group">
+        <label>الوقت</label>
+        <input type="time" id="book-time" required>
+      </div>
+      <div class="card" style="background:#262626; border-color:var(--accent);">
+        <p style="color:#fff;">إجمالي السعر: <span id="book-price" class="price">0</span> ج.م</p>
+      </div>
+      <button type="submit" class="btn">تأكيد الحجز</button>
+    </form>
+  </div>
+
+  <!-- Appointments Section -->
+  <div id="section-appointments" class="section">
+    <h3>مواعيدي الحالية والسابقة</h3>
+    <div id="appointments-list"></div>
+  </div>
+
+  <!-- Admin Section -->
+  <div id="section-admin" class="section">
+    <h3>لوحة التحكم والإدارة</h3>
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div>إيراد اليوم التقديري</div>
+        <div class="stat-value" id="stat-revenue">0 ج.م</div>
+      </div>
+      <div class="stat-card">
+        <div>حجوزات اليوم</div>
+        <div class="stat-value" id="stat-count">0</div>
+      </div>
     </div>
 
-    <!-- Stats Row -->
-    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-bottom: 30px;">
-      <div class="stat-card">
-        <div>إجمالي الموظفين</div>
-        <div class="stat-value" id="stat-staff-count">0</div>
+    <!-- Attendance Card -->
+    <div class="card">
+      <h3>تسجيل حضور/انصراف الصنايعية</h3>
+      <div class="form-group">
+        <label>اختر الموظف</label>
+        <select id="admin-attendance-staff"></select>
       </div>
-      <div class="stat-card">
-        <div>المتواجدون الآن (حضور)</div>
-        <div class="stat-value" id="stat-present-count" style="color: var(--success);">0</div>
-      </div>
-      <div class="stat-card">
-        <div>إجمالي الحجوزات</div>
-        <div class="stat-value" id="stat-bookings-count" style="color: var(--warning);">0</div>
-      </div>
-      <div class="stat-card">
-        <div>قاعدة العملاء</div>
-        <div class="stat-value" id="stat-customers-count" style="color: var(--accent);">0</div>
+      <div style="display:flex; gap:10px;">
+        <button class="btn btn-success" onclick="recordAttendance('حضور')">تسجيل حضور</button>
+        <button class="btn btn-danger" onclick="recordAttendance('انصراف')">تسجيل انصراف</button>
       </div>
     </div>
 
-    <div class="grid">
-      <div class="card" style="grid-column: span 2;">
-        <h3>سجل العملاء وبيانات الاتصال</h3>
-        <div class="table-responsive">
-          <table id="admin-customers-table">
-            <thead>
-              <tr>
-                <th>اسم العميل</th>
-                <th>رقم الهاتف</th>
-                <th>عدد الحجوزات</th>
-                <th>آخر موعد</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="card" style="grid-column: span 2;">
-        <h3>سجل الحضور والانصراف اليومي</h3>
-        <div class="table-responsive">
-          <table id="admin-attendance-table">
-            <thead>
-              <tr>
-                <th>الموظف</th>
-                <th>الحالة</th>
-                <th>التاريخ والوقت</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="card">
-        <h3>إعدادات النظام والأمان</h3>
-        <div class="form-group">
-          <label>تغيير رمز دخول الإدارة</label>
-          <input type="text" id="new-admin-pin" placeholder="الرمز الجديد">
-          <button class="action-btn" style="margin-top: 10px; background-color: var(--warning);" onclick="updateAdminPin()">تحديث الرمز</button>
-        </div>
-        <hr style="border-color: var(--border); margin: 20px 0;">
-        <h3>إضافة مستخدم جديد</h3>
-        <form onsubmit="handleAddUser(event)">
-          <div class="form-group">
-            <label>اسم المستخدم</label>
-            <input type="text" id="new-user-name" required>
-          </div>
-          <div class="form-group">
-            <label>الدور / الصلاحية</label>
-            <select id="new-user-role">
-              <option value="صنايعي">صنايعي</option>
-              <option value="مدير">مدير</option>
-            </select>
-          </div>
-          <button type="submit" class="action-btn">إضافة مستخدم</button>
-        </form>
-      </div>
-
-      <div class="card" style="grid-column: span 2;">
-        <h3>إدارة الرواتب والحسابات</h3>
-        <div class="table-responsive">
-          <table id="admin-salary-table">
-            <thead>
-              <tr>
-                <th>الموظف</th>
-                <th>الراتب الأساسي</th>
-                <th>أيام الحضور (تقديري)</th>
-                <th>الراتب المستحق</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="card" style="grid-column: span 2;">
-        <h3>سجل المواعيد العام والتحكم</h3>
-        <div class="table-responsive">
-          <table id="admin-bookings-table">
-            <thead>
-              <tr>
-                <th>العميل</th>
-                <th>الهاتف</th>
-                <th>الصنايعي</th>
-                <th>الخدمة</th>
-                <th>التاريخ والوقت</th>
-                <th>الإجراءات</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
-      </div>
-      
-      <div class="card">
-        <h3>إضافة صنايعي جديد</h3>
-        <form onsubmit="handleAddStaff(event)">
-          <div class="form-group">
-            <label>اسم الصنايعي</label>
-            <input type="text" id="new-staff-name" required placeholder="اسم الحلاق">
-          </div>
-          <div class="form-group">
-            <label>المهارات (مفصولة بفاصلة)</label>
-            <input type="text" id="new-staff-skills" required placeholder="تدريج, دقن, صبغة">
-          </div>
-          <div class="form-group">
-            <label>الراتب الشهري الأساسي (جنية)</label>
-            <input type="number" id="new-staff-salary" required value="9000">
-          </div>
-          <button type="submit" class="action-btn" style="background-color: var(--success);">إضافة إلى الفريق</button>
-        </form>
-      </div>
+    <!-- Salary Calculation -->
+    <div class="card">
+      <h3>حساب الرواتب المستحقة</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>الموظف</th>
+            <th>الأساسي</th>
+            <th>الحضور</th>
+            <th>المستحق</th>
+          </tr>
+        </thead>
+        <tbody id="salary-table-body"></tbody>
+      </table>
     </div>
+
+    <h4>سجل الحجوزات العام</h4>
+    <div id="admin-appointments-list" style="margin-top: 10px;"></div>
   </div>
 </div>
 
+<!-- Bottom Navigation Bar -->
+<nav class="nav-bottom">
+  <button class="nav-btn active" onclick="switchTab('home', event)">الرئيسية</button>
+  <button class="nav-btn" onclick="switchTab('book', event)">احجز</button>
+  <button class="nav-btn" onclick="switchTab('appointments', event)">مواعيدي</button>
+  <button class="nav-btn" onclick="switchTab('admin', event)">الإدارة</button>
+</nav>
+
 <script>
   const state = {
-    adminPin: '1234',
-    isAdminLoggedIn: false,
-    users: [
-      { id: 1, name: 'يوسف', role: 'صنايعي' },
-      { id: 2, name: 'أحمد', role: 'صنايعي' },
-      { id: 3, name: 'عبده', role: 'صنايعي' },
-      { id: 4, name: 'منعم', role: 'صنايعي' },
-      { id: 5, name: 'آدم', role: 'صنايعي' }
+    user: "Mohamed Fattah",
+    phone: "01065288723",
+    services: [
+      { id: 1, name: "حلاقة شعر", price: 40, duration: "30 دقيقة" },
+      { id: 2, name: "شعر + دقن", price: 60, duration: "45 دقيقة" },
+      { id: 3, name: "تهذيب اللحية", price: 25, duration: "20 دقيقة" },
+      { id: 4, name: "تنظيف وجه", price: 35, duration: "25 دقيقة" }
     ],
     staff: [
-      { id: 1, name: 'يوسف', skills: ['تدريج كلاسيكي', 'تحديد لحية'], rating: 5, salary: 12000 },
-      { id: 2, name: 'أحمد', skills: ['قصات عصرية', 'صبغات'], rating: 5, salary: 11000 },
-      { id: 3, name: 'عبده', skills: ['حلاقة أطفال', 'سشوار'], rating: 5, salary: 10000 },
-      { id: 4, name: 'منعم', skills: ['تنظيف بشرة', 'ماسكات'], rating: 4, salary: 9500 },
-      { id: 5, name: 'آدم', skills: ['تنعيم شعر', 'عناية شاملة'], rating: 5, salary: 10500 }
+      { id: 1, name: "أحمد العتيبي", experience: "12 سنة خبرة", salary: 12000 },
+      { id: 2, name: "محمد فتحي", experience: "20 سنة خبرة", salary: 11000 },
+      { id: 3, name: "يوسف الشمري", experience: "6 سنوات خبرة", salary: 9500 }
     ],
-    services: ['قص شعر', 'تحديد لحية', 'تنظيف بشرة', 'صبغة شعر', 'عناية بالوجه'],
     bookings: [
-      { id: 1699999990000, client: 'محمد محمود', phone: '01012345678', staffId: 1, service: 'تدريج كلاسيكي', datetime: '2026-11-10T14:00', status: 'مؤكد' },
-      { id: 1699999991000, client: 'علي حسن', phone: '01198765432', staffId: 2, service: 'صبغة شعر', datetime: '2026-11-10T16:30', status: 'مؤكد' }
+      { id: 1, client: "Mohamed Fattah", phone: "01065288723", service: "شعر + دقن", staff: "أحمد العتيبي", date: "2026-11-08", time: "10:00", price: 60, status: "مكتمل" },
+      { id: 2, client: "Mohamed Fattah", phone: "01065288723", service: "حلاقة شعر", staff: "أحمد العتيبي", date: "2026-11-08", time: "12:00", price: 40, status: "مؤكد" },
+      { id: 3, client: "Mohamed Fattah", phone: "01065288723", service: "شعر + دقن", staff: "محمد فتحي", date: "2026-11-08", time: "15:00", price: 60, status: "بانتظار التأكيد" }
     ],
     attendance: [
-      { id: 1, staffId: 1, type: 'حضور', timestamp: '2026-11-08 08:30' }
+      { staffId: 1, type: "حضور" },
+      { staffId: 2, type: "حضور" }
     ]
   };
 
-  function checkAdminLogin() {
-    const pin = document.getElementById('admin-pin').value;
-    if(pin === state.adminPin) {
-      state.isAdminLoggedIn = true;
-      document.getElementById('auth-overlay').style.display = 'none';
-      document.getElementById('pin-error').style.display = 'none';
-      if(!document.getElementById('admin-tab-btn')) {
-        const adminTab = document.createElement('button');
-        adminTab.id = 'admin-tab-btn';
-        adminTab.className = 'tab-btn';
-        adminTab.innerText = 'لوحة الإدارة';
-        adminTab.onclick = () => switchView('admin');
-        document.querySelector('.nav-tabs').appendChild(adminTab);
-      }
-      switchView('admin');
-    } else {
-      document.getElementById('pin-error').style.display = 'block';
-    }
-  }
-
-  function logoutAdmin() {
-    state.isAdminLoggedIn = false;
-    const adminTab = document.getElementById('admin-tab-btn');
-    if(adminTab) adminTab.remove();
-    document.getElementById('auth-overlay').style.display = 'flex';
-    document.getElementById('admin-pin').value = '';
-    switchView('client');
-  }
-
-  function updateAdminPin() {
-    const newPin = document.getElementById('new-admin-pin').value;
-    if(newPin) {
-      state.adminPin = newPin;
-      alert('تم تحديث رمز الإدارة بنجاح!');
-      document.getElementById('new-admin-pin').value = '';
-    }
-  }
-
-  function switchView(viewId) {
-    if(viewId === 'admin' && !state.isAdminLoggedIn) {
-      document.getElementById('auth-overlay').style.display = 'flex';
-      return;
-    }
-    document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-    document.getElementById(`${viewId}-view`).classList.add('active');
+  function switchTab(tabId, evt) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(`section-${tabId}`).classList.add('active');
     
-    const clickedBtn = document.querySelector(`button[onclick="switchView('${viewId}')"]`) || document.getElementById('admin-tab-btn');
-    if(clickedBtn) clickedBtn.classList.add('active');
+    if(evt) evt.currentTarget.classList.add('active');
     
-    if(viewId === 'staff') renderStaffView();
-    if(viewId === 'admin') renderAllAdmin();
+    if(tabId === 'home') renderHome();
+    if(tabId === 'book') renderBook();
+    if(tabId === 'appointments') renderAppointments();
+    if(tabId === 'admin') renderAdmin();
   }
 
-  function init() {
-    renderClientView();
-    populateSelects();
-  }
-
-  function populateSelects() {
-    const selects = ['booking-staff-select', 'staff-filter-select', 'attendance-staff-select'];
-    selects.forEach(id => {
-      const el = document.getElementById(id);
-      if(!el) return;
-      const currentVal = el.value;
-      el.innerHTML = state.staff.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
-      if(currentVal) el.value = currentVal;
-    });
-    
-    const serviceSelect = document.getElementById('booking-service-select');
-    if(serviceSelect) {
-      serviceSelect.innerHTML = state.services.map(s => `<option value="${s}">${s}</option>`).join('');
-    }
-  }
-
-  function renderClientView() {
-    const container = document.getElementById('staff-cards-container');
-    if(!container) return;
-    container.innerHTML = state.staff.map(s => `
+  function renderHome() {
+    document.getElementById('services-list').innerHTML = state.services.map(s => `
       <div class="card">
         <h3>${s.name}</h3>
-        <div class="rating-stars">${'★'.repeat(Math.floor(s.rating))}</div>
-        <div style="font-size: 0.9rem; color: var(--text-secondary);">الخبرات والمهارات:</div>
-        <div class="skills-container">
-          ${s.skills.map(skill => `<span class="skill-pill">${skill}</span>`).join('')}
+        <p>المدة: ${s.duration}</p>
+        <p class="price">${s.price} ج.م</p>
+      </div>
+    `).join('');
+    
+    document.getElementById('staff-list').innerHTML = state.staff.map(s => `
+      <div class="card">
+        <h3>${s.name}</h3>
+        <p>${s.experience}</p>
+      </div>
+    `).join('');
+  }
+
+  function renderBook() {
+    document.getElementById('book-service').innerHTML = state.services.map(s => `<option value="${s.id}">${s.name} - ${s.price} ج.م</option>`).join('');
+    document.getElementById('book-staff').innerHTML = state.staff.map(s => `<option value="${s.name}">${s.name}</option>`).join('');
+    document.getElementById('book-date').value = new Date().toISOString().split('T')[0];
+    updateBookingPrice();
+  }
+
+  function updateBookingPrice() {
+    const serviceId = parseInt(document.getElementById('book-service').value);
+    const service = state.services.find(s => s.id === serviceId);
+    document.getElementById('book-price').innerText = service ? service.price : 0;
+  }
+
+  function submitBooking(e) {
+    e.preventDefault();
+    const clientName = document.getElementById('client-name').value;
+    const clientPhone = document.getElementById('client-phone').value;
+    const serviceId = parseInt(document.getElementById('book-service').value);
+    const service = state.services.find(s => s.id === serviceId);
+    const staff = document.getElementById('book-staff').value;
+    const date = document.getElementById('book-date').value;
+    const time = document.getElementById('book-time').value;
+    
+    state.bookings.push({
+      id: Date.now(),
+      client: clientName,
+      phone: clientPhone,
+      service: service.name,
+      staff: staff,
+      date: date,
+      time: time,
+      price: service.price,
+      status: "بانتظار التأكيد"
+    });
+    
+    alert("تم حفظ حجزك بنجاح!");
+    switchTab('appointments');
+  }
+
+  function renderAppointments() {
+    const list = document.getElementById('appointments-list');
+    const myBookings = state.bookings.filter(b => b.phone === state.phone || b.client === state.user);
+    
+    if(myBookings.length === 0) {
+      list.innerHTML = "<p style='color:var(--text-secondary); text-align:center;'>لا توجد مواعيد مسجلة حالياً.</p>";
+      return;
+    }
+    
+    list.innerHTML = myBookings.map(b => `
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <h3>${b.service}</h3>
+          <span class="badge ${getStatusClass(b.status)}">${b.status}</span>
+        </div>
+        <p>الحلاق: ${b.staff}</p>
+        <p>التاريخ: ${b.date} | الوقت: ${b.time}</p>
+        <p>السعر: <span class="price">${b.price} ج.م</span></p>
+        ${b.status !== 'مكتمل' ? `<button class="btn btn-danger" style="margin-top:10px;" onclick="cancelBooking(${b.id})">إلغاء الموعد</button>` : ''}
+      </div>
+    `).join('');
+  }
+
+  function getStatusClass(status) {
+    if(status === 'مكتمل' || status === 'مؤكد') return 'badge-success';
+    return 'badge-warning';
+  }
+
+  function cancelBooking(id) {
+    if(confirm('هل أنت متأكد من إلغاء الموعد؟')) {
+      state.bookings = state.bookings.filter(b => b.id !== id);
+      renderAppointments();
+    }
+  }
+
+  function renderAdmin() {
+    const today = new Date().toISOString().split('T')[0];
+    const todaysBookings = state.bookings.filter(b => b.date === today);
+    
+    const revenue = todaysBookings.reduce((sum, b) => sum + b.price, 0);
+    document.getElementById('stat-revenue').innerText = `${revenue} ج.م`;
+    document.getElementById('stat-count').innerText = todaysBookings.length;
+    
+    // Select for Attendance
+    document.getElementById('admin-attendance-staff').innerHTML = state.staff.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+    
+    // Salary Table
+    document.getElementById('salary-table-body').innerHTML = state.staff.map(s => {
+      const days = state.attendance.filter(a => a.staffId === s.id && a.type === 'حضور').length;
+      const earned = Math.round((s.salary / 26) * days);
+      return `
+        <tr>
+          <td>${s.name}</td>
+          <td>${s.salary}</td>
+          <td>${days} أيام</td>
+          <td style="color:var(--accent); font-weight:bold;">${earned} ج.م</td>
+        </tr>
+      `;
+    }).join('');
+
+    // All Appointments
+    const list = document.getElementById('admin-appointments-list');
+    list.innerHTML = state.bookings.map(b => `
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <h4>${b.client} (${b.phone})</h4>
+          <span class="badge ${getStatusClass(b.status)}">${b.status}</span>
+        </div>
+        <p>الخدمة: ${b.service} | الحلاق: ${b.staff}</p>
+        <p>التاريخ: ${b.date} ${b.time}</p>
+        <div style="display:flex; gap:10px; margin-top:10px;">
+          ${b.status === 'بانتظار التأكيد' ? `<button class="btn btn-success" onclick="updateStatus(${b.id}, 'مؤكد')">تأكيد</button>` : ''}
+          ${b.status !== 'مكتمل' ? `<button class="btn" style="background:var(--accent); color:#000;" onclick="updateStatus(${b.id}, 'مكتمل')">تم الحضور</button>` : ''}
         </div>
       </div>
     `).join('');
   }
 
-  function handleBooking(e) {
-    e.preventDefault();
-    const newBooking = {
-      id: Date.now(),
-      client: document.getElementById('client-name').value,
-      phone: document.getElementById('client-phone').value,
-      staffId: parseInt(document.getElementById('booking-staff-select').value),
-      service: document.getElementById('booking-service-select').value,
-      datetime: document.getElementById('booking-datetime').value,
-      status: 'مؤكد'
-    };
-    state.bookings.push(newBooking);
-    alert('تم تأكيد الحجز بنجاح!');
-    document.getElementById('booking-form').reset();
-    if(state.isAdminLoggedIn) renderAllAdmin();
-  }
-
   function recordAttendance(type) {
-    const staffId = parseInt(document.getElementById('attendance-staff-select').value);
-    const now = new Date().toISOString().slice(0, 16).replace('T', ' ');
-    state.attendance.push({ id: Date.now(), staffId, type, timestamp: now });
+    const staffId = parseInt(document.getElementById('admin-attendance-staff').value);
+    state.attendance.push({ staffId, type });
     alert(`تم تسجيل ${type} بنجاح!`);
-    if(state.isAdminLoggedIn) renderAllAdmin();
+    renderAdmin();
   }
 
-  function renderStaffView() {
-    const el = document.getElementById('staff-filter-select');
-    if(!el || !el.value) return;
-    const selectedStaffId = parseInt(el.value);
-    const tbody = document.querySelector('#staff-appointments-table tbody');
-    const staffBookings = state.bookings.filter(b => b.staffId === selectedStaffId);
-    
-    tbody.innerHTML = staffBookings.map(b => `
-      <tr>
-        <td>${b.client}</td>
-        <td>${b.phone}</td>
-        <td>${b.service}</td>
-        <td>${b.datetime.replace('T', ' ')}</td>
-        <td><span class="badge badge-success">${b.status}</span></td>
-      </tr>
-    `).join('') || '<tr><td colspan="5" style="text-align:center; color: var(--text-secondary);">لا توجد مواعيد مسجلة حالياً</td></tr>';
+  function updateStatus(id, newStatus) {
+    const booking = state.bookings.find(b => b.id === id);
+    if(booking) booking.status = newStatus;
+    renderAdmin();
   }
 
-  function renderAllAdmin() {
-    
+  window.onload = () => {
+    renderHome();
+  };
+</script>
+
+</body>
+</html>
+
