@@ -1,0 +1,310 @@
+import React, useState;
+import {
+  Calendar, Users, Scissors, DollarSign, Phone, Clock, Plus, Trash2 } from 'lucide-react';
+
+export default function Top1Salon() {
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [password, setPassword] = useState('');
+  const [activeTab, setActiveTab] = useState('booking');
+
+  const [staff, setStaff] = useState([
+    { id: 1, name: 'يوسف', salary: 1200 },
+    { id: 2, name: 'أحمد', salary: 1200 },
+    { id: 3, name: 'عبده', salary: 1200 },
+    { id: 4, name: 'منعم', salary: 1200 },
+    { id: 5, name: 'آدم', salary: 1200 },
+  ]);
+
+  const [services, setServices] = useState([
+    'بروتين', 'حلاقة شعر و لحية', 'استشوار او ويفي',
+    'سيغه سوده', 'وكس و وجه', 'تنظيف بشره عادي',
+    'تنظيف بشره عميق', 'حلاق طفل', 'حمام زيت'
+  ]);
+
+  const [bookings, setBookings] = useState([]);
+  const [newStaffName, setNewStaffName] = useState('');
+  const [newStaffSalary, setNewStaffSalary] = useState('');
+  const [newServiceName, setNewServiceName] = useState('');
+
+  const [bookingName, setBookingName] = useState('');
+  const [selectedService, setSelectedService] = useState(services[0]);
+  const [selectedStaff, setSelectedStaff] = useState(staff[0]?.name);
+  const [bookingTime, setBookingTime] = useState('');
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    if (password === '1234') {
+      setIsAdmin(true);
+    } else {
+      alert('كلمة المرور غير صحيحة');
+    }
+  };
+
+  const handleAddStaff = () => {
+    if (newStaffName && newStaffSalary) {
+      setStaff([...staff, {
+        id: Date.now(),
+        name: newStaffName,
+        salary: Number(newStaffSalary)
+      }]);
+      setNewStaffName('');
+      setNewStaffSalary('');
+    }
+  };
+
+  const handleRemoveStaff = (id) => {
+    setStaff(staff.filter(s => s.id !== id));
+  };
+
+  const handleAddService = () => {
+    if (newServiceName && !services.includes(newServiceName)) {
+      setServices([...services, newServiceName]);
+      setNewServiceName('');
+    }
+  };
+
+  const handleRemoveService = (serviceToRemove) => {
+    setServices(services.filter(s => s !== serviceToRemove));
+  };
+
+  const handleCreateBooking = (e) => {
+    e.preventDefault();
+    if (bookingName && bookingTime) {
+      setBookings([...bookings, {
+        id: Date.now(),
+        name: bookingName,
+        service: selectedService,
+        staff: selectedStaff,
+        time: bookingTime
+      }]);
+      setBookingName('');
+      alert('تم تأكيد الحجز بنجاح!');
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-900 text-white font-sans pb-12">
+      <header className="border-b border-gray-800 p-4 flex items-center justify-between bg-black sticky top-0 z-10">
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center font-bold text-black text-xs text-center p-1">
+            TOP 1 SALON
+          </div>
+          <div>
+            <h1 className="font-bold text-lg">Top 1 Salon</h1>
+            <p className="text-xs text-gray-400 flex items-center gap-1">
+              <Clock size={12} /> من 2 صباحاً حتى 2 مساءً
+            </p>
+          </div>
+        </div>
+        <a href="tel:01000000000" className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm flex items-center gap-2 font-medium">
+          <Phone size={16} /> اتصل بنا
+        </a>
+      </header>
+
+      <div className="flex border-b border-gray-800 bg-gray-800/50">
+        <button
+          onClick={() => setActiveTab('booking')}
+          className={`flex-1 py-4 text-center font-medium border-b-2 transition-colors ${
+            activeTab === 'booking' ? 'border-blue-500 text-blue-400 bg-gray-800' : 'border-transparent text-gray-400'
+          }`}
+        >
+          حجز المواعيد
+        </button>
+        <button
+          onClick={() => setActiveTab('admin')}
+          className={`flex-1 py-4 text-center font-medium border-b-2 transition-colors flex items-center justify-center gap-2 ${
+            activeTab === 'admin' ? 'border-blue-500 text-blue-400 bg-gray-800' : 'border-transparent text-gray-400'
+          }`}
+        >
+          لوحة تحكم الإدارة
+        </button>
+      </div>
+
+      <main className="p-4 max-w-4xl mx-auto">
+        {activeTab === 'booking' && (
+          <form onSubmit={handleCreateBooking} className="bg-gray-800 p-6 rounded-xl space-y-4">
+            <h2 className="text-xl font-bold border-b border-gray-700 pb-2">احجز خدمتك الآن</h2>
+            
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-1">الاسم بالكامل</label>
+              <input
+                type="text"
+                required
+                value={bookingName}
+                onChange={(e) => setBookingName(e.target.value)}
+                className="w-full bg-gray-700 rounded-lg p-3 text-white border border-gray-600 focus:border-blue-500 outline-none"
+                placeholder="أدخل اسمك"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-1">الخدمة المطلوبة</label>
+              <select
+                value={selectedService}
+                onChange={(e) => setSelectedService(e.target.value)}
+                className="w-full bg-gray-700 rounded-lg p-3 text-white border border-gray-600 focus:border-blue-500 outline-none"
+              >
+                {services.map((s, idx) => (
+                  <option key={idx} value={s}>{s}</option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-1">المصفف (الحلاق)</label>
+              <select
+                value={selectedStaff}
+                onChange={(e) => setSelectedStaff(e.target.value)}
+                className="w-full bg-gray-700 rounded-lg p-3 text-white border border-gray-600 focus:border-blue-500 outline-none"
+              >
+                {staff.map((s) => (
+                  <option key={s.id} value={s.name}>{s.name}</option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-1">الموعد (متاح من 2 ص إلى 2 م)</label>
+              <input
+                type="datetime-local"
+                required
+                value={bookingTime}
+                onChange={(e) => setBookingTime(e.target.value)}
+                className="w-full bg-gray-700 rounded-lg p-3 text-white border border-gray-600 focus:border-blue-500 outline-none"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-lg transition-colors shadow-lg"
+            >
+              تأكيد الحجز
+            </button>
+          </form>
+        )}
+
+        {activeTab === 'admin' && (
+          <div>
+            {!isAdmin ? (
+              <form onSubmit={handleLogin} className="bg-gray-800 p-6 rounded-xl space-y-4 max-w-md mx-auto">
+                <h2 className="text-xl font-bold text-center">دخول لوحة التحكم</h2>
+                <input
+                  type="password"
+                  placeholder="كلمة المرور (1234)"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full bg-gray-700 rounded-lg p-3 text-white border border-gray-600 text-center text-xl tracking-widest outline-none"
+                />
+                <button type="submit" className="w-full bg-blue-600 py-3 rounded-lg font-bold">دخول</button>
+              </form>
+            ) : (
+              <div className="space-y-6">
+                <div className="flex justify-between items-center bg-gray-800 p-4 rounded-xl">
+                  <h2 className="text-xl font-bold">لوحة الإدارة الرئيسية</h2>
+                  <button onClick={() => setIsAdmin(false)} className="text-sm bg-red-600/20 text-red-400 px-3 py-1.5 rounded-lg border border-red-500/30">تسجيل الخروج</button>
+                </div>
+
+                <div className="bg-gray-800 p-6 rounded-xl space-y-4">
+                  <h3 className="text-lg font-bold flex items-center gap-2 border-b border-gray-700 pb-2">
+                    <Users className="text-blue-400" /> إدارة الموظفين والرواتب
+                  </h3>
+                  
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      placeholder="اسم الموظف الجديد"
+                      value={newStaffName}
+                      onChange={(e) => setNewStaffName(e.target.value)}
+                      className="flex-1 bg-gray-700 rounded-lg p-2.5 text-sm outline-none border border-gray-600"
+                    />
+                    <input
+                      type="number"
+                      placeholder="الراتب"
+                      value={newStaffSalary}
+                      onChange={(e) => setNewStaffSalary(e.target.value)}
+                      className="w-24 bg-gray-700 rounded-lg p-2.5 text-sm outline-none border border-gray-600"
+                    />
+                    <button onClick={handleAddStaff} className="bg-green-600 p-2.5 rounded-lg text-white font-bold flex items-center justify-center">
+                      <Plus size={20} />
+                    </button>
+                  </div>
+
+                  <div className="space-y-2">
+                    {staff.map((s) => (
+                      <div key={s.id} className="flex justify-between items-center bg-gray-700/50 p-3 rounded-lg border border-gray-600">
+                        <div>
+                          <span className="font-bold">{s.name}</span>
+                          <span className="text-xs text-gray-400 mr-3 bg-gray-800 px-2 py-0.5 rounded border border-gray-600">
+                            الراتب: {s.salary} ج.م
+                          </span>
+                        </div>
+                        <button onClick={() => handleRemoveStaff(s.id)} className="text-red-400 hover:text-red-300 p-1">
+                          <Trash2 size={18} />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="bg-gray-800 p-6 rounded-xl space-y-4">
+                  <h3 className="text-lg font-bold flex items-center gap-2 border-b border-gray-700 pb-2">
+                    <Scissors className="text-blue-400" /> إدارة الخدمات
+                  </h3>
+
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      placeholder="اسم الخدمة الجديدة"
+                      value={newServiceName}
+                      onChange={(e) => setNewServiceName(e.target.value)}
+                      className="flex-1 bg-gray-700 rounded-lg p-2.5 text-sm outline-none border border-gray-600"
+                    />
+                    <button onClick={handleAddService} className="bg-green-600 p-2.5 rounded-lg text-white font-bold flex items-center justify-center">
+                      <Plus size={20} />
+                    </button>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2">
+                    {services.map((s, idx) => (
+                      <span key={idx} className="bg-gray-700 px-3 py-1.5 rounded-lg text-sm border border-gray-600 flex items-center gap-2">
+                        {s}
+                        <button onClick={() => handleRemoveService(s)} className="text-gray-400 hover:text-red-400">
+                          &times;
+                        </button>
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="bg-gray-800 p-6 rounded-xl space-y-4">
+                  <h3 className="text-lg font-bold flex items-center gap-2 border-b border-gray-700 pb-2">
+                    <Calendar className="text-blue-400" /> قائمة الحجوزات النشطة
+                  </h3>
+
+                  {bookings.length === 0 ? (
+                    <p className="text-gray-400 text-center py-4">لا توجد حجوزات حالياً.</p>
+                  ) : (
+                    <div className="space-y-3">
+                      {bookings.map((b) => (
+                        <div key={b.id} className="bg-gray-700/50 p-4 rounded-lg border border-gray-600 flex justify-between items-center">
+                          <div>
+                            <h4 className="font-bold text-base">{b.name}</h4>
+                            <p className="text-xs text-gray-300 mt-1">الخدمة: <span className="text-blue-400">{b.service}</span> - المصفف: <span className="text-blue-400">{b.staff}</span></p>
+                          </div>
+                          <span className="text-xs bg-gray-800 px-2.5 py-1 rounded-full border border-gray-600 text-gray-300">
+                            {b.time}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+      </main>
+    </div>
+  );
+}
+
